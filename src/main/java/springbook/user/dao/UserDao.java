@@ -17,9 +17,9 @@ public class UserDao {
 	}
 	
 	public void add(User user) throws ClassNotFoundException, SQLException {
-		Connection conn = connectionMaker.makeConnection();
+		Connection c = connectionMaker.makeConnection();
 
-		PreparedStatement ps = conn.prepareStatement(
+		PreparedStatement ps = c.prepareStatement(
 				"insert into users(id, name, password) values(?,?,?)");
 		ps.setString(1, user.getId());
 		ps.setString(2, user.getName());
@@ -28,7 +28,7 @@ public class UserDao {
 		
 		ps.executeUpdate();
 		ps.close();
-		conn.close();
+		c.close();
 	}
 	
 	public User get(String id) throws ClassNotFoundException, SQLException {
