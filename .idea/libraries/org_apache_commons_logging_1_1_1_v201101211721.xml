@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="org.apache.commons.logging-1.1.1.v201101211721">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../../../org.apache.commons.logging-1.1.1.v201101211721.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
