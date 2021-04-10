@@ -4,6 +4,8 @@
       <root url="jar://$PROJECT_DIR$/../../../../../../org.apache.commons.logging-1.1.1.v201101211721.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../../../../spring-jdbc-3.0.7.RELEASE-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>
