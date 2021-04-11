@@ -10,12 +10,12 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="springbook" target="1.6" />
+      <module name="springbook" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="springbook" options="-Xlint:all" />
+      <module name="springbook" options="" />
     </option>
   </component>
 </project>

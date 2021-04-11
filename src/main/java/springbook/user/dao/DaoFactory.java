@@ -20,7 +20,7 @@ public class DaoFactory {
         SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
 
         dataSource.setDriverClass(com.mysql.jdbc.Driver.class);
-        dataSource.setUrl("jdbc:mysql://localhost/tobispring");
+        dataSource.setUrl("jdbc:mysql://localhost/tobispring?useSSL=false");
         dataSource.setUsername("root");
         dataSource.setPassword("1234");
 
