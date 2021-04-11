@@ -1,10 +1,12 @@
 package com.company.springbook;
 
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.dao.EmptyResultDataAccessException;
 import springbook.user.dao.DaoFactory;
 import springbook.user.dao.UserDao;
 import springbook.user.domain.User;
@@ -15,17 +17,27 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class UserDaoTest {
+	private UserDao dao;
+	private User user1;
+	private User user2;
+	private User user3;
 
-	@Test
-	public void addAndGet() throws SQLException {
+
+	@Before
+	public void setUp() {
 		ApplicationContext context =
 				new AnnotationConfigApplicationContext(DaoFactory.class);
 
-		UserDao dao = context.getBean("userDao", UserDao.class);
-		User user1 = new User("one", "1", "111");
-		User user2 = new User("two", "2", "111");
-		User user3 = new User("three", "3", "111");
+		this.dao = context.getBean("userDao", UserDao.class);
+		this.user1 = new User("one", "1", "111");
+		this.user2 = new User("two", "2", "111");
+		this.user3 = new User("three", "3", "111");
 
+	}
+
+
+	@Test
+	public void addAndGet() throws SQLException {
 		dao.deleteAll();
 		assertThat(dao.getCount(), is(0));
 
@@ -37,6 +49,14 @@ public class UserDaoTest {
 
 		dao.add(user3);
 		assertThat(dao.getCount(), is(3));
+	}
+
+	@Test(expected = EmptyResultDataAccessException.class)
+	public void getUserFailure() throws SQLException, ClassNotFoundException {
+		dao.deleteAll();
+		assertThat(dao.getCount(), is(0));
+
+		dao.get("unknown_id");
 	}
 
 
