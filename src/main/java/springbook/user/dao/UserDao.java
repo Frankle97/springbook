@@ -19,19 +19,27 @@ public class UserDao {
 		this.dataSource = dataSource;
 	}
 
-	public void add(User user) throws SQLException {
-		Connection c = dataSource.getConnection();
+	private JdbcContext jdbcContext;
 
-		PreparedStatement ps = c.prepareStatement(
-				"insert into users(id, name, password) values(?,?,?)");
-		ps.setString(1, user.getId());
-		ps.setString(2, user.getName());
-		ps.setString(3, user.getPassword());
+	public void setJdbcContext(JdbcContext jdbcContext) {
+		this.jdbcContext = jdbcContext;
+	}
 
-		
-		ps.executeUpdate();
-		ps.close();
-		c.close();
+	public void add(final User user) throws SQLException {
+		this.jdbcContext.workWithStatementStrategy(
+				new StatementStrategy() {
+					public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+						PreparedStatement ps =
+								c.prepareStatement("insert into users(id, name, password)" +
+										"values (?,?,?)");
+						ps.setString(1, user.getId());
+						ps.setString(3, user.getName());
+						ps.setString(2, user.getPassword());
+
+						return ps;
+					}
+				}
+		);
 	}
 	
 	public User get(String id) throws ClassNotFoundException, SQLException {
@@ -61,8 +69,13 @@ public class UserDao {
 	}
 
 	public void deleteAll() throws SQLException {
-		StatementStrategy st = new DeleteAllStatement();
-		jdbcContextWithStatementStrategy(st);
+		this.jdbcContext.workWithStatementStrategy(
+				new StatementStrategy() {
+					public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+						return c.prepareStatement("delete from users");
+					}
+				}
+		);
 	}
 
 	public int getCount() throws SQLException {
